@@ -1,4 +1,17 @@
-# antialgorithm
+# antialgorithm (Matsu's version)
+
+A fork of [mankidev/antialgorithm](https://github.com/mankidev/antialgorithm), adapted for J1 League content: J League Scout, Sorare Tactics and @MatsuyamaSorare. It keeps the original method and scripts, defers to Matsu's own writing style, adds J1-specific defaults to avoid, and adds rules for matchday and data graphics.
+
+Changes from the original:
+
+- `SKILL.md` rewritten around J1 angles, headlines and graphics, with his style rules taking priority and work like PMOs and client briefings left out of scope.
+- `rough.py` skips any element marked `data-rough="off"` and everything inside it, so bars, numbers, scorelines and names stay exact while the rest is roughened.
+- `check.py` warns when an SVG has Japanese text but no Japanese font is installed.
+
+The original README follows.
+
+---
+
 
 ![Six posters without the skill on top, six with it below](images/showcase.png)
 
@@ -11,7 +24,7 @@ Both rows came from the same prompt: `Design a poster for a music festival as a 
 ## Install
 
 ```
-git clone https://github.com/mankidev/antialgorithm ~/.claude/skills/antialgorithm
+git clone https://github.com/chiswicksuk-main/antialgorithmMyV ~/.claude/skills/antialgorithm
 ```
 
 The scripts need Python 3. `check.py` also needs numpy, Pillow and `rsvg-convert` (or the cairosvg package).

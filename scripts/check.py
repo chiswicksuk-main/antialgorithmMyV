@@ -96,6 +96,19 @@ def write(tree, path):
     tree.write(path, encoding="unicode")
 
 
+CJK = re.compile(r"[\u3040-\u30ff\u3400-\u9fff\uff00-\uffef]")
+
+
+def cjk_font_missing(root):
+    """True when the SVG has Japanese text but fontconfig lists no Japanese font."""
+    if not any(CJK.search("".join(el.itertext())) for el in root.iter() if tag(el) == "text"):
+        return False
+    if not shutil.which("fc-list"):
+        return False
+    out = subprocess.run(["fc-list", ":lang=ja", "family"], capture_output=True, text=True).stdout
+    return not out.strip()
+
+
 def main():
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -153,6 +166,8 @@ def main():
         os.remove(nf_png)
 
     problems = []
+    if cjk_font_missing(root):
+        problems.append("Japanese text found but no Japanese font is installed, so it may render as empty boxes (install Noto Sans CJK JP)")
     tmp = tempfile.mkdtemp()
     n = len(texts(root))
     for i in range(n):

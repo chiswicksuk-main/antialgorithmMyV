@@ -328,7 +328,7 @@ class Rougher:
             size = fnum(fs, size)
         for child in list(el):
             t = tag(child)
-            if t in SKIP:
+            if t in SKIP or child.get("data-rough") == "off":
                 continue
             was = self.free
             if child.get("transform"):
